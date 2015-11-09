@@ -1,0 +1,2 @@
+# GraphicalCMake
+graphical cmakelist editor
