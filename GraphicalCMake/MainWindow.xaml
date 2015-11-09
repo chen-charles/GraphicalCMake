@@ -1,0 +1,61 @@
+﻿<Window x:Class="GraphicalCMake.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GraphicalCMake"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525" Visibility="Visible">
+    <Grid>
+        <VirtualizingStackPanel Margin="10,0" VerticalAlignment="Bottom">
+            <Label Name="Status" HorizontalAlignment="Left" Content="TestLblStatus"/>
+        </VirtualizingStackPanel>
+
+
+
+        <TabPanel x:Name="tabPanel" Margin="10,0" VerticalAlignment="Top">
+            <Menu>
+                <MenuItem Header="File">
+                    <MenuItem Header="New"/>
+                    <MenuItem Header="Open ..."/>
+                    <Separator/>
+                    <MenuItem Header="Save (_S)"/>
+                    <MenuItem Header="Save As ..."/>
+                    <Separator/>
+                    <MenuItem Header="Exit" Click="MenuItemOnClick_Exit"/>
+                </MenuItem>
+ 
+                <MenuItem Header="Edit">
+                    <MenuItem Header="Undo"/>
+                    <MenuItem Header="Redo"/>
+                    <Separator/>
+                    <MenuItem Header="Cut"/>
+                    <MenuItem Header="Copy"/>
+                    <MenuItem Header="Paste"/>
+                    <MenuItem Header="Delete"/>
+                    <Separator/>
+                    <MenuItem Header="Find ..."/>
+                </MenuItem>
+
+                <MenuItem Header="View">
+                    <MenuItem Header="ResetView" Click="MenuItem_ViewResetClick"/>
+                </MenuItem>
+
+                <MenuItem Header="Build">
+                    <MenuItem Header="Build CMakeLists"/>
+                    <MenuItem Header="Clean"/>
+                </MenuItem>
+
+                <MenuItem Header="Help">
+                    <MenuItem Header="About GraphicalCMake"/>
+                </MenuItem>
+            </Menu>
+
+        </TabPanel>
+
+        <local:CanvasViewBorder x:Name="mBorder" Margin="10,30" ClipToBounds="True" Background="White">
+            <local:CMakeArchRenderableTargetCanvas x:Name="mCanvas"/>
+        </local:CanvasViewBorder>
+
+    </Grid>
+</Window>

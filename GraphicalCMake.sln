@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphicalCMake", "GraphicalCMake\GraphicalCMake.csproj", "{67F34516-8DE3-403E-A5F1-5E0887248F3B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{85634285-982B-4A9C-88E9-57B7682BB656} = {85634285-982B-4A9C-88E9-57B7682BB656}
+		{B8AFB6A8-022B-4C7D-B376-53FC4050D3B4} = {B8AFB6A8-022B-4C7D-B376-53FC4050D3B4}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMakeArch", "CMakeArch\CMakeArch.csproj", "{B8AFB6A8-022B-4C7D-B376-53FC4050D3B4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{096D2F28-DEFB-42C9-9424-C9EC2B38A54D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMakeIO", "CMakeIO\CMakeIO.csproj", "{85634285-982B-4A9C-88E9-57B7682BB656}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B8AFB6A8-022B-4C7D-B376-53FC4050D3B4} = {B8AFB6A8-022B-4C7D-B376-53FC4050D3B4}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{67F34516-8DE3-403E-A5F1-5E0887248F3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67F34516-8DE3-403E-A5F1-5E0887248F3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67F34516-8DE3-403E-A5F1-5E0887248F3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67F34516-8DE3-403E-A5F1-5E0887248F3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8AFB6A8-022B-4C7D-B376-53FC4050D3B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8AFB6A8-022B-4C7D-B376-53FC4050D3B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8AFB6A8-022B-4C7D-B376-53FC4050D3B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8AFB6A8-022B-4C7D-B376-53FC4050D3B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85634285-982B-4A9C-88E9-57B7682BB656}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85634285-982B-4A9C-88E9-57B7682BB656}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85634285-982B-4A9C-88E9-57B7682BB656}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85634285-982B-4A9C-88E9-57B7682BB656}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
