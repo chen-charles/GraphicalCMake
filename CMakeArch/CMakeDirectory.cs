@@ -60,6 +60,7 @@ namespace CMakeArch
 
         public CMakeDirectory(DirectoryInfo thisDirectory)
         {
+            Name = thisDirectory.Name;
             directory = thisDirectory;
             targets = new HashSet<CMakeTarget>();
             properties = new CMakeDirectoryPropertyCollection();

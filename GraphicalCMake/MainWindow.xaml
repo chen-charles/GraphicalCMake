@@ -42,7 +42,7 @@
                 </MenuItem>
 
                 <MenuItem Header="Build">
-                    <MenuItem Header="Build CMakeLists"/>
+                    <MenuItem Header="Build CMakeLists" Click="MenuItem_Build_CMakeLists"/>
                     <MenuItem Header="Clean"/>
                 </MenuItem>
 

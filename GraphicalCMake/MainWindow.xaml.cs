@@ -25,6 +25,7 @@ namespace GraphicalCMake
     public partial class MainWindow : Window
     {
         public static Label StatusLabel = null;
+        public static CMakeDirectory lastSelectedCD = null;
         public MainWindow()
         {
             InitializeComponent();
@@ -94,6 +95,15 @@ namespace GraphicalCMake
             {
                 var defaultMargin = new Thickness(0, 0, 11, 0);
                 mainPanelBorder.Margin = toolBar.HasOverflowItems ? defaultMargin : new Thickness(0);
+            }
+        }
+
+        private void MenuItem_Build_CMakeLists(object sender, RoutedEventArgs e)
+        {
+            if (lastSelectedCD != null)
+            {
+                CMakeArch.CMakeProject cp = new CMakeArch.CMakeProject(lastSelectedCD.cdirectory.Name, lastSelectedCD.cdirectory);
+                new CMakeIO.CMakeWriter(cp);
             }
         }
     }

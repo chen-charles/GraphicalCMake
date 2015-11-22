@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="CMakeDirectory.cs" />
     <Compile Include="CMakeGlobal.cs" />
+    <Compile Include="CMakeProject.cs" />
     <Compile Include="CMakeProperty.cs" />
     <Compile Include="CMakeTarget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

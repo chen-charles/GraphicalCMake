@@ -9,6 +9,11 @@ using System.IO;
 
 namespace CMakeIO
 {
+    public class IOCache
+    {
+
+    }
+
     public class IOBase
     {
         public static Tuple<int, int, int> CMakeVer = new Tuple<int, int, int>(3, 3, 2);
@@ -19,11 +24,4 @@ namespace CMakeIO
         }
     }
 
-    public class IOWriter : IOBase
-    {
-        public IOWriter()
-        {
-
-        }
-    }
 }
