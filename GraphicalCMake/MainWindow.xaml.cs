@@ -25,7 +25,6 @@ namespace GraphicalCMake
     public partial class MainWindow : Window
     {
         public static Label StatusLabel = null;
-        public static CMakeDirectory lastSelectedCD = null;
         public MainWindow()
         {
             InitializeComponent();
@@ -100,10 +99,13 @@ namespace GraphicalCMake
 
         private void MenuItem_Build_CMakeLists(object sender, RoutedEventArgs e)
         {
-            if (lastSelectedCD != null)
+            foreach(CMakeDirectory cd in from cart in mCanvas.targets.Values where (cart is CMakeDirectory) select cart)
             {
-                CMakeArch.CMakeProject cp = new CMakeArch.CMakeProject(lastSelectedCD.cdirectory.Name, lastSelectedCD.cdirectory);
-                new CMakeIO.CMakeWriter(cp);
+                if (cd.isProject)
+                {
+                    //MessageBox.Show(cd.cdirectory.subdirectories.Count.ToString());
+                    new CMakeIO.CMakeWriter(new CMakeArch.CMakeProject(cd.cdirectory.Name, cd.cdirectory));
+                }
             }
         }
     }

@@ -20,12 +20,28 @@ namespace GraphicalCMake
         public const int width = 160;
         public const int height = 90;
 
-        public Connector conn;
+        public Connector conn_subdirectories;
         public CMakeDirectory(DirectoryInfo thisDirectory)
         {
             cdirectory = new CMakeArch.CMakeDirectory(thisDirectory);
             renderoptions.Add(RenderOption.OnSelection, new Tuple<object, object>(false, null));
             this.CommonTargetedBoardInitialization(width, height, border, canvas);
+            isProject = false;
+        }
+        
+        private void init_conn(out Connector conn, string text)
+        {
+            conn = new Connector(this);
+            canvas.Children.Add(conn);
+            conn.Content = text;
+            //var szTb = Draw.getTextBlockSize(text, conn.FontSize);
+            //conn.Width = szTb.Width+5;
+            //conn.Height = szTb.Height+5;
+            //conn.Measure(new Size(0, 0));
+            //conn.Arrange(new Rect());
+            conn.DroppedAsSource += Conn_DroppedAsSource;
+            conn.DroppedAsTarget += Conn_DroppedAsTarget;
+            conn.Clicked += Conn_Clicked;
         }
 
         public override void Load()
@@ -38,18 +54,9 @@ namespace GraphicalCMake
             tb.FontSize = 20;
             canvas.Children.Add(tb);
 
-            conn = new Connector(this);
-            canvas.Children.Add(conn);
-            conn.Width = 20;
-            conn.Height = 20;
-            conn.Content = "T";
-            conn.Measure(new Size(0, 0));
-            conn.Arrange(new Rect());
-            Canvas.SetLeft(conn, 0);
-            Canvas.SetTop(conn, canvas.ActualHeight-conn.ActualHeight);
-            conn.DroppedAsSource += Conn_DroppedAsSource;
-            conn.DroppedAsTarget += Conn_DroppedAsTarget;
-            conn.Clicked += Conn_Clicked;
+            init_conn(out conn_subdirectories, "SubDirectories");
+            Canvas.SetLeft(conn_subdirectories, 0);
+            Canvas.SetBottom(conn_subdirectories, 0);
         }
 
         private void Conn_Clicked(object sender, RoutedEventArgs e)
@@ -59,12 +66,27 @@ namespace GraphicalCMake
 
         private void Conn_DroppedAsTarget(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("MessageBox from Target " + conn.GetHashCode() + "! EventSource(SourceConnector) is " + e.OriginalSource.GetHashCode());
+            if (!(sender is Connector)) return;
+            var conn = sender as Connector;
+
+            if (conn == conn_subdirectories)
+            {
+                if ((e.OriginalSource as Connector).info.owner is CMakeDirectory)
+                {
+                    cdirectory.subdirectories.Add(((e.OriginalSource as Connector).info.owner as CMakeDirectory).cdirectory);
+                    //MessageBox.Show(cdirectory.subdirectories.Count.ToString());
+                    MessageBox.Show("MessageBox from Target " + conn.GetHashCode() + "! EventSource(SourceConnector) is " + e.OriginalSource.GetHashCode());
+                }
+            }
         }
 
         private void Conn_DroppedAsSource(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("MessageBox from Source " + conn.GetHashCode() + "! EventSource(TargetConnector) is " + e.OriginalSource.GetHashCode());
+            if (!(sender is Connector)) return;
+            var conn = sender as Connector;
+
+            if (conn == conn_subdirectories)
+                MessageBox.Show("MessageBox from Source " + conn.GetHashCode() + "! EventSource(TargetConnector) is " + e.OriginalSource.GetHashCode());
         }
 
         //public override void RenderOptionChanged(RenderOption option, Tuple<object, object> original, Tuple<object, object> current)
@@ -86,6 +108,8 @@ namespace GraphicalCMake
 
             return sb.ToString();
         }
+
+        public bool isProject { get; set; }
     }
 
     public class CMakeTarget : CMakeArchRenderableTargetBase, CMakeArchRenderableTarget

@@ -79,13 +79,12 @@ namespace GraphicalCMake
             }
         }
 
-        #region getTextBlockSize
+        #region getFrameworkElementSize
         public static Size getTextBlockSize(TextBlock tb)
         {
-            tb.Measure(new Size(0, 0));
-            tb.Arrange(new Rect());
-            return new Size(tb.ActualWidth, tb.ActualHeight);
+            return getFrameworkElementSize(tb);
         }
+
         public static Size getTextBlockSize(out TextBlock tb, string text, double fontSize)
         {
             tb = new TextBlock();
@@ -93,10 +92,25 @@ namespace GraphicalCMake
             tb.FontSize = fontSize;
             return getTextBlockSize(tb);
         }
+
         public static Size getTextBlockSize(string text, double fontSize)
         {
             TextBlock tb;
             return getTextBlockSize(out tb, text, fontSize);
+        }
+
+        public static Size getFrameworkElementSize<T>(T t) where T : FrameworkElement
+        {
+            t.Measure(new Size(0, 0));
+            t.Arrange(new Rect());
+            return new Size(t.ActualWidth, t.ActualHeight);
+        }
+
+        public static Size getAutoFrameWorkElementSize<T>(T t) where T : FrameworkElement
+        {
+            t.Width = double.NaN;
+            t.Height = double.NaN;
+            return getFrameworkElementSize(t);
         }
         #endregion
 

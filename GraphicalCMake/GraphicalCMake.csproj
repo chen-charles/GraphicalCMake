@@ -86,7 +86,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CMakeArch\CMakeArch.cs" />
+    <Compile Include="CMakeArch.cs" />
     <Compile Include="CanvasViewBorder.cs" />
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
@@ -108,7 +108,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="CMakeArch\CMakeArchRenderableTarget.cs" />
+    <Compile Include="CMakeArchRenderableTarget.cs" />
     <Compile Include="Connector.cs" />
     <Compile Include="DetailWindow.xaml.cs">
       <DependentUpon>DetailWindow.xaml</DependentUpon>

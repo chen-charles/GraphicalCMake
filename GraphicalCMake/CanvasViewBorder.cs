@@ -244,11 +244,7 @@ namespace GraphicalCMake
             {
                 //MessageBox.Show(child.targets[leftSelected].ToString());
                 MainWindow.StatusLabel.Content = child.targets[leftSelected].ToStatusString();
-                if (child.targets[leftSelected] is CMakeDirectory) MainWindow.lastSelectedCD = (CMakeDirectory)child.targets[leftSelected];
-                DetailWindow dw = new DetailWindow();
-                dw.DetailTb.Text = child.targets[leftSelected].ToStatusString();
-                dw.Title = child.targets[leftSelected].ToString();
-                dw.Show();
+                DetailWindow dw = new DetailWindow(child.targets[leftSelected]);
                 this_MouseLeftButtonUp(sender, e);
             }
         }
