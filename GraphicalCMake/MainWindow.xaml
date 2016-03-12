@@ -19,12 +19,12 @@
                     <MenuItem Header="New"/>
                     <MenuItem Header="Open ..."/>
                     <Separator/>
-                    <MenuItem Header="Save (_S)"/>
-                    <MenuItem Header="Save As ..."/>
+                    <MenuItem Header="Save (_S)" Click="MenuItemOnClick_Save"/>
+                    <MenuItem Header="Save As ..." Click="MenuItemOnClick_SaveAs"/>
                     <Separator/>
                     <MenuItem Header="Exit" Click="MenuItemOnClick_Exit"/>
                 </MenuItem>
- 
+
                 <MenuItem Header="Edit">
                     <MenuItem Header="Undo"/>
                     <MenuItem Header="Redo"/>
@@ -53,9 +53,20 @@
 
         </TabPanel>
 
-        <local:CanvasViewBorder x:Name="mBorder" Margin="10,30" ClipToBounds="True" Background="White">
-            <local:CMakeArchRenderableTargetCanvas x:Name="mCanvas"/>
-        </local:CanvasViewBorder>
+        <TabControl x:Name="viewCtrl" Margin="10,30">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="AllowDrop" Value="True"/>
+                    <EventSetter Event="PreviewMouseMove" Handler="TabItem_PreviewMouseMove"/>
+                    <EventSetter Event="Drop" Handler="TabItem_Drop"/>
+                </Style>
+            </TabControl.Resources>
 
+            <TabItem Header="TabItem" IsSelected="True"/>
+            <!--<local:CanvasViewBorder ClipToBounds="True" Background="White">
+                    <local:CMakeArchRenderableTargetCanvas>
+                    </local:CMakeArchRenderableTargetCanvas>
+                </local:CanvasViewBorder>-->
+        </TabControl>
     </Grid>
 </Window>

@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
+using System.Runtime.Serialization;
 
 namespace CMakeArch
 {
+    [Serializable]
     public class CMakeDirectoryPropertyCollection : CMakePropertyCollection
     {
         public static new List<string> property_lst
@@ -47,16 +49,17 @@ namespace CMakeArch
             };
     }
 
+    [Serializable]
     public class CMakeDirectory : CMakeElement
     {
         public String Name { get; set; }
-        public CMakeDirectoryPropertyCollection properties { get; }
-        public HashSet<FileInfo> sources { get; } 
+        public CMakeDirectoryPropertyCollection properties { get; private set; }
+        public HashSet<FileInfo> sources { get; private set; }
 
-        public HashSet<CMakeTarget> targets { get; }
-        public DirectoryInfo directory { get; }
+        public HashSet<CMakeTarget> targets { get; private set; }
+        public DirectoryInfo directory { get; private set; }
 
-        public HashSet<CMakeDirectory> subdirectories { get; }
+        public HashSet<CMakeDirectory> subdirectories { get; private set; }
 
         public CMakeDirectory(DirectoryInfo thisDirectory)
         {
@@ -120,6 +123,25 @@ namespace CMakeArch
             }
             return sb.ToString();
         }
-    }
 
+        protected CMakeDirectory(SerializationInfo info, StreamingContext context)
+        {
+            Name = (String)info.GetValue("Name", typeof(String));
+            properties = (CMakeDirectoryPropertyCollection)info.GetValue("properties", typeof(CMakeDirectoryPropertyCollection));
+            sources = (HashSet<FileInfo>)info.GetValue("sources", typeof(HashSet<FileInfo>));
+            targets = (HashSet<CMakeTarget>)info.GetValue("targets", typeof(HashSet<CMakeTarget>));
+            directory = (DirectoryInfo)info.GetValue("directory", typeof(DirectoryInfo));
+            subdirectories = (HashSet<CMakeDirectory>)info.GetValue("subdirectories", typeof(HashSet<CMakeDirectory>));
+        }
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Name", Name, typeof(String));
+            info.AddValue("properties", properties, typeof(CMakeDirectoryPropertyCollection));
+            info.AddValue("sources", sources, typeof(HashSet<FileInfo>));
+            info.AddValue("targets", targets, typeof(HashSet<CMakeTarget>));
+            info.AddValue("directory", directory, typeof(DirectoryInfo));
+            info.AddValue("subdirectories", subdirectories, typeof(HashSet<CMakeDirectory>));
+        }
+
+    }
 }

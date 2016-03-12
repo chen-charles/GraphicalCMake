@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace CMakeArch
 {
+    [Serializable]
     public class CMakeGlobalPropertyCollection : CMakePropertyCollection
     {
         public static new List<string> property_lst
@@ -47,8 +49,19 @@ namespace CMakeArch
             };
     }
 
-    public class CMakeGlobal
+    [Serializable]
+    public class CMakeGlobal : ISerializable
     {
         CMakeGlobalPropertyCollection properties { get; }
+        public CMakeGlobal() { properties = new CMakeGlobalPropertyCollection(); }
+
+        protected CMakeGlobal(SerializationInfo info, StreamingContext context)
+        {
+            properties = (CMakeGlobalPropertyCollection)info.GetValue("properties", typeof(CMakeGlobalPropertyCollection));
+        }
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("properties", properties, typeof(CMakeGlobalPropertyCollection));
+        }
     }
 }

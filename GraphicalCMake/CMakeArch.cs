@@ -142,7 +142,7 @@ namespace GraphicalCMake
     public class CMakeFile : CMakeArchRenderableTargetBase, CMakeArchRenderableTarget
     {
         public string Name;
-        protected FileInfo file;
+        public FileInfo file { get; private set; }
 
         private TextBlock tb;
         public CMakeFile(FileInfo f)

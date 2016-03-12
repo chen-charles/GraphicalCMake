@@ -21,13 +21,12 @@ namespace GraphicalCMake
     /// </summary>
     public partial class ExploreWindow : Window
     {
-        private object dummyNode = null;
-
         public ExploreWindow()
         {
             InitializeComponent();
-            //Window_Loaded(null, null);  // Seems like this func is not called automatically, thus do it manually
         }
+
+        private object dummyNode = null;
 
         public string SelectedImagePath { get; set; }
 
@@ -54,37 +53,34 @@ namespace GraphicalCMake
             if (item.Items.Count == 1 && item.Items[0] == dummyNode)
             {
                 item.Items.Clear();
-                //try
-                //{
-                    foreach (string s in Directory.GetDirectories(item.Tag.ToString()))
-                    {
-                        TreeViewItem subitem = new TreeViewItem();
+
+                foreach (string s in Directory.GetDirectories(item.Tag.ToString()))
+                {
+                    TreeViewItem subitem = new TreeViewItem();
                     
-                        subitem.Header = s.Substring(s.LastIndexOf("\\") + 1);
+                    subitem.Header = s.Substring(s.LastIndexOf("\\") + 1);
                         
-                        subitem.FontWeight = FontWeights.Normal;
-                        subitem.Items.Add(dummyNode);
-                        subitem.Expanded += new RoutedEventHandler(folder_Expanded);
+                    subitem.FontWeight = FontWeights.Normal;
+                    subitem.Items.Add(dummyNode);
+                    subitem.Expanded += new RoutedEventHandler(folder_Expanded);
 
-                        subitem.MouseMove += foldersItem_MouseMove;
+                    subitem.MouseMove += foldersItem_MouseMove;
 
-                        item.Items.Add(subitem);
-                        subitem.Tag = static_foldersItem_fetchPath(subitem);
-                    }
+                    item.Items.Add(subitem);
+                    subitem.Tag = static_foldersItem_fetchPath(subitem);
+                }
 
-                    foreach (string s in Directory.GetFiles(item.Tag.ToString()))
-                    {
-                        TreeViewItem subitem = new TreeViewItem();
-                        subitem.Header = s.Substring(s.LastIndexOf("\\") + 1);
-                        subitem.FontWeight = FontWeights.Normal;
-                        subitem.Expanded += FileSel_Expanded;
+                foreach (string s in Directory.GetFiles(item.Tag.ToString()))
+                {
+                    TreeViewItem subitem = new TreeViewItem();
+                    subitem.Header = s.Substring(s.LastIndexOf("\\") + 1);
+                    subitem.FontWeight = FontWeights.Normal;
+                    subitem.Expanded += FileSel_Expanded;
                         
-                        subitem.MouseMove += foldersItem_MouseMove;
-                        item.Items.Add(subitem);
-                        subitem.Tag = static_foldersItem_fetchPath(subitem) + s;
-                  }
-                //}
-                //catch (Exception err) { MessageBox.Show(err.Message); }
+                    subitem.MouseMove += foldersItem_MouseMove;
+                    item.Items.Add(subitem);
+                    subitem.Tag = static_foldersItem_fetchPath(subitem) + s;
+                }
             }
         }
 

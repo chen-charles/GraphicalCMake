@@ -4,22 +4,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Runtime.Serialization;
 using System.IO;
 
 namespace CMakeArch
 {
-    public interface CMakeElement
+    public interface CMakeElement : ISerializable
     {
         String Name { get; set; }
         HashSet<FileInfo> sources { get; }
     }
 
-    public class CMakeProperty
+    [Serializable]
+    public class CMakeProperty : ISerializable
     {
         public String name { get; }
         public String value { get; set; }
         public CMakeProperty(String name) { this.name = name; }
+        public CMakeProperty(String name, String value) : this(name) { this.value = value; }
         public CMakeProperty(CMakeProperty other) { this.name = other.name; this.value = other.value; }
         public override String ToString()
         {
@@ -30,13 +32,22 @@ namespace CMakeArch
             sb.Append("\n");
             return sb.ToString();
         }
+
+
+        public CMakeProperty(SerializationInfo info, StreamingContext context) : this(info.GetValue("name", typeof(string)) as string, info.GetValue("value", typeof(string)) as string) { }
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("name", name, typeof(string));
+            info.AddValue("value", value, typeof(string));
+        }
     }
 
-    public class CMakePropertyCollection : ICollection<CMakeProperty>
+    [Serializable]
+    public class CMakePropertyCollection : ICollection<CMakeProperty>, ISerializable
     {
         public static HashSet<String> property_lst;
         public static HashSet<String> property_fixed;
-        private Dictionary<string, CMakeProperty> properties = new Dictionary<string, CMakeProperty>();
+        private Dictionary<string, CMakeProperty> properties;
 
         public int Count { get { return properties.Count; } }
 
@@ -90,8 +101,6 @@ namespace CMakeArch
             return properties.Values.GetEnumerator();
         }
 
-
-
         public CMakeProperty popProperty(String name)
         {
             CMakeProperty prop;
@@ -124,6 +133,17 @@ namespace CMakeArch
         IEnumerator IEnumerable.GetEnumerator()
         {
             throw new NotImplementedException();
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            ((ISerializable)properties).GetObjectData(info, context);
+        }
+        public CMakePropertyCollection() { properties = new Dictionary<string, CMakeProperty>(); }
+        protected CMakePropertyCollection(SerializationInfo info, StreamingContext context)
+        {
+            properties = (Dictionary<string, CMakeProperty>)info.GetValue("properties", typeof(Dictionary<string, CMakeProperty>));
+            properties.OnDeserialization(null);
         }
     }
 }

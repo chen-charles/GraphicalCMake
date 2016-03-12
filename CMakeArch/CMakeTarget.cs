@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Runtime.Serialization;
 
 namespace CMakeArch
 {
+    [Serializable]
     public class CMakeTargetPropertyCollection : CMakePropertyCollection
     {
         public static new List<string> property_lst
@@ -192,6 +194,7 @@ namespace CMakeArch
             };
     }
 
+    [Serializable]
     public class CMakeTarget : CMakeElement
     {
         public String Name { get; set; }
@@ -241,5 +244,24 @@ namespace CMakeArch
             }
             return sb.ToString();
         }
+
+
+        protected CMakeTarget(SerializationInfo info, StreamingContext context)
+        {
+            Type = (TargetType)info.GetValue("Type", typeof(TargetType));
+            IMPORTED = (bool)info.GetValue("IMPORTED", typeof(bool));
+            Name = (string)info.GetValue("Name", typeof(string));
+            sources = (HashSet<FileInfo>)info.GetValue("sources", typeof(HashSet<FileInfo>));
+            properties = (CMakeTargetPropertyCollection)info.GetValue("properties", typeof(CMakeTargetPropertyCollection));
+        }
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Type", Type, typeof(TargetType));
+            info.AddValue("IMPORTED", IMPORTED, typeof(bool));
+            info.AddValue("Name", Name, typeof(string));
+            info.AddValue("sources", sources, typeof(HashSet<FileInfo>));
+            info.AddValue("properties", properties, typeof(CMakeTargetPropertyCollection));
+        }
+
     }
 }
